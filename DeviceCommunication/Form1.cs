@@ -17,7 +17,7 @@ namespace DeviceCommunication
         private CancellationTokenSource cancellationToken;
 
         // REPLACE THIS WITH YOUR RENDER SERVER URL!
-        private const string SERVER_URL = "wss://devicecommunicationserver.onrender.com";
+        private const string SERVER_URL = "ws://devicecommunicationserver.onrender.com";
 
         // UI Controls
         private Panel connectionPanel;
