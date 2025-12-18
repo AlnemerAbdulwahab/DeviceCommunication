@@ -1,0 +1,15 @@
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\bin\Debug\net10.0-windows\DeviceCommunication.exe
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\bin\Debug\net10.0-windows\DeviceCommunication.deps.json
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\bin\Debug\net10.0-windows\DeviceCommunication.runtimeconfig.json
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\bin\Debug\net10.0-windows\DeviceCommunication.dll
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\bin\Debug\net10.0-windows\DeviceCommunication.pdb
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.AssemblyInfoInputs.cache
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.AssemblyInfo.cs
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.csproj.CoreCompileInputs.cache
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.sourcelink.json
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.dll
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\refint\DeviceCommunication.dll
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.pdb
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\DeviceCommunication.genruntimeconfig.cache
+C:\Users\aan12\Desktop\PC\Github-AlnemerAbdulwahab\DeviceCommunication\DeviceCommunication\obj\Debug\net10.0-windows\ref\DeviceCommunication.dll
