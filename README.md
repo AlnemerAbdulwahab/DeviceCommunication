@@ -60,7 +60,7 @@ Device 1 (Your PC)           Relay Server (Cloud)         Device 2 (Friend's PC)
 
 ## 🔧 Installation & Setup
 
-### Option 1: Run from Source
+### Run from Source
 
 1. **Clone the repository**
 ```bash
@@ -79,10 +79,6 @@ private const string SERVER_URL = "ws://your-server-url.onrender.com";
 ```bash
 dotnet run
 ```
-
-### Option 2: Download Executable (Coming Soon)
-
-Download the latest release from the [Releases](https://github.com/AlnemerAbdulwahab/DeviceCommunication/releases) page.
 
 ## 📖 Usage Guide
 
@@ -180,19 +176,6 @@ private async Task SendMessage()
 ### Messages not sending
 - **Cause**: WebSocket connection lost
 - **Solution**: Click "Disconnect" and reconnect
-
-## 🚀 Future Enhancements
-
-- [ ] File sharing (images, documents)
-- [ ] Group chat (3+ people in same room)
-- [ ] Message history and saving
-- [ ] Dark mode theme
-- [ ] Voice messages
-- [ ] End-to-end encryption
-- [ ] Mobile app (iOS/Android)
-- [ ] Message read receipts
-- [ ] Typing indicators
-
 
 ## 👨‍💻 Author
 
