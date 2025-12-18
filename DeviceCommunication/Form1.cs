@@ -15,8 +15,7 @@ namespace DeviceCommunication
         private ClientWebSocket webSocket;
         private bool isRunning = false;
         private CancellationTokenSource cancellationToken;
-
-        // REPLACE THIS WITH YOUR RENDER SERVER URL!
+        
         private const string SERVER_URL = "ws://devicecommunicationserver.onrender.com";
 
         // UI Controls
@@ -39,6 +38,7 @@ namespace DeviceCommunication
             InitializeComponent();
             SetupUI();
             GenerateRoomCode();
+            _ = ConnectToMyRoom();
         }
 
         private void GenerateRoomCode()
@@ -46,7 +46,42 @@ namespace DeviceCommunication
             Random rnd = new Random();
             myRoomCode = $"{rnd.Next(1000, 9999)}-{rnd.Next(1000, 9999)}";
             lblMyRoomCode.Text = $"Your Room Code: {myRoomCode}";
-            lblStatus.Text = "✓ Ready!\n\nShare your room code with anyone, anywhere in the world,\nor enter their room code to connect.";
+        }
+
+        private async Task ConnectToMyRoom()
+        {
+            try
+            {
+                webSocket = new ClientWebSocket();
+                cancellationToken = new CancellationTokenSource();
+                
+                lblStatus.Text = "Connecting to server...";
+                lblStatus.ForeColor = Color.Orange;
+
+                await webSocket.ConnectAsync(new Uri(SERVER_URL), cancellationToken.Token);
+
+                var joinMessage = new
+                {
+                    type = "join",
+                    roomCode = myRoomCode
+                };
+
+                string json = JsonSerializer.Serialize(joinMessage);
+                byte[] buffer = Encoding.UTF8.GetBytes(json);
+                await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, cancellationToken.Token);
+
+                isRunning = true;
+                Task.Run(() => ReceiveMessages(cancellationToken.Token));
+
+                lblStatus.Text = "✓ Ready!\n\nShare your room code with anyone, anywhere,\nor enter their room code to connect.";
+                lblStatus.ForeColor = Color.FromArgb(76, 175, 80);
+            }
+            catch (Exception ex)
+            {
+                lblStatus.Text = $"Server connection failed!\n\nError: {ex.Message}\n\nMake sure server is running.";
+                lblStatus.ForeColor = Color.Red;
+                MessageBox.Show($"Could not connect to server.\n\nMake sure:\n• Server URL is correct in code\n• Server is running on Render.com\n• You have internet connection\n\nError: {ex.Message}", "Connection Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void SetupUI()
@@ -99,8 +134,7 @@ namespace DeviceCommunication
             btnCopyCode.FlatStyle = FlatStyle.Flat;
             btnCopyCode.Cursor = Cursors.Hand;
             btnCopyCode.FlatAppearance.BorderSize = 0;
-            btnCopyCode.Click += (s, e) =>
-            {
+            btnCopyCode.Click += (s, e) => {
                 Clipboard.SetText(myRoomCode);
                 MessageBox.Show("Room code copied to clipboard!", "Copied", MessageBoxButtons.OK, MessageBoxIcon.Information);
             };
@@ -152,7 +186,7 @@ namespace DeviceCommunication
             btnConnect.FlatStyle = FlatStyle.Flat;
             btnConnect.Cursor = Cursors.Hand;
             btnConnect.FlatAppearance.BorderSize = 0;
-            btnConnect.Click += async (s, e) => await ConnectToRoom();
+            btnConnect.Click += async (s, e) => await ConnectToOtherRoom();
             connectionPanel.Controls.Add(btnConnect);
 
             lblStatus = new Label();
@@ -225,52 +259,44 @@ namespace DeviceCommunication
             chatPanel.Controls.Add(btnDisconnect);
         }
 
-        private async Task ConnectToRoom()
+        private async Task ConnectToOtherRoom()
         {
-            string roomCode = txtRoomCode.Text.Trim();
+            string otherRoomCode = txtRoomCode.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(roomCode))
+            if (string.IsNullOrWhiteSpace(otherRoomCode))
             {
                 MessageBox.Show("Please enter a room code", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (roomCode == myRoomCode)
+            if (otherRoomCode == myRoomCode)
             {
                 MessageBox.Show("You cannot connect to your own room code!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             btnConnect.Enabled = false;
-            lblStatus.Text = $"Connecting to room {roomCode}...";
+            lblStatus.Text = $"Connecting to room {otherRoomCode}...";
             lblStatus.ForeColor = Color.Orange;
 
             try
             {
-                webSocket = new ClientWebSocket();
-                cancellationToken = new CancellationTokenSource();
-
-                await webSocket.ConnectAsync(new Uri(SERVER_URL), cancellationToken.Token);
-
                 var joinMessage = new
                 {
                     type = "join",
-                    roomCode = roomCode
+                    roomCode = otherRoomCode
                 };
 
                 string json = JsonSerializer.Serialize(joinMessage);
                 byte[] buffer = Encoding.UTF8.GetBytes(json);
                 await webSocket.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Text, true, cancellationToken.Token);
 
-                isRunning = true;
-                Task.Run(() => ReceiveMessages(cancellationToken.Token));
-
-                lblStatus.Text = "Joined room! Waiting for other person...";
+                lblStatus.Text = $"Joined room {otherRoomCode}! Waiting for connection...";
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Connection error: {ex.Message}\n\nMake sure the server is running!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                lblStatus.Text = "Connection failed. Check server URL in code.";
+                MessageBox.Show($"Connection error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                lblStatus.Text = "Connection failed. Try again.";
                 lblStatus.ForeColor = Color.Red;
                 btnConnect.Enabled = true;
             }
@@ -394,8 +420,9 @@ namespace DeviceCommunication
             txtChat.Clear();
             txtMessage.Clear();
             btnConnect.Enabled = true;
-            lblStatus.Text = "Disconnected. Enter a room code to connect again.";
-            lblStatus.ForeColor = Color.Gray;
+            
+            GenerateRoomCode();
+            _ = ConnectToMyRoom();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
