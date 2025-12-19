@@ -12,8 +12,6 @@ A real-time peer-to-peer messaging application built with C# Windows Forms that 
 - **🔄 Auto-Reconnect**: Seamlessly handles disconnections and reconnections
 - **💯 100% Free**: No subscriptions, no limits, completely free to use
 
-## 📸 Screenshots
-
 ### Connection Screen
 Share your room code or enter someone else's code to connect.
 
